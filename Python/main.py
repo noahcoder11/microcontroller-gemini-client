@@ -34,7 +34,7 @@ print('Data read successfully. Processing data...')
 with wave.open('output.wav', 'wb') as wav_file:
     wav_file.setnchannels(1)
     wav_file.setsampwidth(2)  # 16-bit samples
-    wav_file.setframerate(8000)
+    wav_file.setframerate(6000)
     wav_file.writeframes(np_data.tobytes())
 
 
