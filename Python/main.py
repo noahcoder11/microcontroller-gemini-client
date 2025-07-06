@@ -2,8 +2,9 @@ from serial import Serial
 from serial.tools import list_ports
 import numpy as np
 import time
+import csv
 
-BYTES_TO_READ = 20
+BYTES_TO_READ = 400
 BAUD_RATE = 115200
 
 print('Please select a serial port:')
@@ -23,16 +24,10 @@ np_data = np.frombuffer(data, dtype=d_type).astype(np.int16)
 
 np_data = np_data - 2048
 
-print('Number of bytes read:', len(data))
-print('Numpy format: ', len(np_data))
-print('Numpy data:', np_data)
+print('Data read successfully. Processing data...')
+new_data = np.array([ np.arange(len(np_data)), np_data ]).T
 
-print('BYTES:')
-print('\n'.join([f'{byte:08b}' for byte in data]))
-
-with open('output.bin', 'w') as f:
-    out_string = '\n'.join([np.binary_repr(byte, width=16) for byte in np_data])
-    f.write(out_string)
+np.savetxt('data.csv', new_data, delimiter=',', header='Index,Value', comments='', fmt='%d')
 
 serial.close()
 print('Serial port closed.')
