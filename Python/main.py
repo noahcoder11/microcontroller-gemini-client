@@ -17,7 +17,9 @@ print('Reading serial data...')
 data = serial.read(BYTES_TO_READ)
 
 print('Number of bytes read:', len(data))
-print('Data:', data)
+
+with open('output.bin', 'wb') as f:
+    f.write(data)
 
 serial.close()
 print('Serial port closed.')
