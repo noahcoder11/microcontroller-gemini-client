@@ -15,7 +15,7 @@ selected_port = int(input('Enter the number of the port you want to use: '))
 
 serial = Serial(port=ports[selected_port].device, baudrate=BAUD_RATE, timeout=1)
 serial.reset_input_buffer()
-time.sleep(1)
+time.sleep(5)
 print('Reading serial data...')
 
 data = serial.read(BYTES_TO_READ)
