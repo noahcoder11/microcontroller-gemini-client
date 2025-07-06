@@ -14,6 +14,7 @@ print('\n'.join(f'{i}: {port.device} - {port.description}' for i, port in enumer
 selected_port = int(input('Enter the number of the port you want to use: '))
 
 serial = Serial(port=ports[selected_port].device, baudrate=BAUD_RATE, timeout=10)
+serial.flush()
 serial.reset_input_buffer()
 time.sleep(5)
 print('Reading serial data...')
