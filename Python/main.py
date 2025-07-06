@@ -19,6 +19,7 @@ time.sleep(5)
 print('Reading serial data...')
 
 data = serial.read(BYTES_TO_READ)
+print(f'Read {len(data)} bytes from serial port.')
 d_type = np.dtype(np.uint16).newbyteorder('<')
 np_data = np.frombuffer(data, dtype=d_type).astype(np.int16)
 
