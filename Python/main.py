@@ -1,16 +1,24 @@
-# This is a sample Python script.
+from serial import Serial
+from serial.tools import list_ports
 
-# Press ⌃F5 to execute it or replace it with your code.
-# Press Double ⇧ to search everywhere for classes, files, tool windows, actions, and settings.
+BYTES_TO_READ = 10
+BAUD_RATE = 115200
 
+print('Please select a serial port:')
+ports = list_ports.comports()
+print('\n'.join(f'{i}: {port.device} - {port.description}' for i, port in enumerate(ports)))
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press F9 to toggle the breakpoint.
+selected_port = int(input('Enter the number of the port you want to use: '))
 
+serial = Serial(port=ports[selected_port].device, baudrate=BAUD_RATE, timeout=1)
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
+print('Reading serial data...')
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+data = serial.read(BYTES_TO_READ)
+
+print('Number of bytes read:', len(data))
+print('Data:', data)
+
+serial.close()
+print('Serial port closed.')
+print('Done.')
