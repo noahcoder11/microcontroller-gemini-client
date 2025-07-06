@@ -1,6 +1,7 @@
 from serial import Serial
 from serial.tools import list_ports
 import numpy as np
+import time
 
 BYTES_TO_READ = 20
 BAUD_RATE = 115200
@@ -12,7 +13,8 @@ print('\n'.join(f'{i}: {port.device} - {port.description}' for i, port in enumer
 selected_port = int(input('Enter the number of the port you want to use: '))
 
 serial = Serial(port=ports[selected_port].device, baudrate=BAUD_RATE, timeout=1)
-
+serial.reset_input_buffer()
+time.sleep(1)
 print('Reading serial data...')
 
 data = serial.read(BYTES_TO_READ)
