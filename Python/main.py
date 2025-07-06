@@ -16,10 +16,12 @@ serial = Serial(port=ports[selected_port].device, baudrate=BAUD_RATE, timeout=1)
 print('Reading serial data...')
 
 data = serial.read(BYTES_TO_READ)
-np_data = np.frombuffer(data, dtype=np.uint16)
+d_type = np.dtype(np.uint16).newbyteorder('>')
+np_data = np.frombuffer(data, dtype=d_type)
 
 print('Number of bytes read:', len(data))
 print('Numpy format: ', len(np_data))
+print('Numpy data:', np_data)
 
 with open('output.bin', 'wb') as f:
     f.write(data)
