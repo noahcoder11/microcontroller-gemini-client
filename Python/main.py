@@ -23,6 +23,9 @@ print('Number of bytes read:', len(data))
 print('Numpy format: ', len(np_data))
 print('Numpy data:', np_data)
 
+print('BYTES:')
+print('\n'.join([f'{byte:08b}' for byte in data]))
+
 with open('output.bin', 'w') as f:
     out_string = '\n'.join([np.binary_repr(byte, width=16) for byte in np_data])
     f.write(out_string)
