@@ -1,7 +1,7 @@
 from serial import Serial
 from serial.tools import list_ports
 
-BYTES_TO_READ = 10
+BYTES_TO_READ = 20
 BAUD_RATE = 115200
 
 print('Please select a serial port:')
