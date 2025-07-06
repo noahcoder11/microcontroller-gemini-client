@@ -21,6 +21,8 @@ data = serial.read(BYTES_TO_READ)
 d_type = np.dtype(np.uint16).newbyteorder('<')
 np_data = np.frombuffer(data, dtype=d_type)
 
+np_data = np_data - 2048
+
 print('Number of bytes read:', len(data))
 print('Numpy format: ', len(np_data))
 print('Numpy data:', np_data)
