@@ -23,7 +23,7 @@ print(f'Read {len(data)} bytes from serial port.')
 d_type = np.dtype(np.uint16).newbyteorder('<')
 np_data = np.frombuffer(data, dtype=d_type).astype(np.int16)
 
-np_data = np_data - 2048
+np_data = np_data - (2048 - 150)
 print(len(np_data), 'samples read.')
 print('Data read successfully. Processing data...')
 
