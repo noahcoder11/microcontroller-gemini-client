@@ -2,9 +2,9 @@ from serial import Serial
 from serial.tools import list_ports
 import numpy as np
 import time
-import csv
+import wave
 
-BYTES_TO_READ = 400
+BYTES_TO_READ = 96000
 BAUD_RATE = 115200
 
 print('Please select a serial port:')
@@ -23,11 +23,18 @@ d_type = np.dtype(np.uint16).newbyteorder('<')
 np_data = np.frombuffer(data, dtype=d_type).astype(np.int16)
 
 np_data = np_data - 2048
-
+print(len(np_data), 'samples read.')
 print('Data read successfully. Processing data...')
-new_data = np.array([ np.arange(len(np_data)), np_data ]).T
 
-np.savetxt('data.csv', new_data, delimiter=',', header='Index,Value', comments='', fmt='%d')
+# new_data = np.array([ np.arange(len(np_data)), np_data ]).T
+
+# np.savetxt('data.csv', new_data, delimiter=',', header='Index,Value', comments='', fmt='%d')
+with wave.open('output.wav', 'wb') as wav_file:
+    wav_file.setnchannels(1)
+    wav_file.setsampwidth(2)  # 16-bit samples
+    wav_file.setframerate(16000)
+    wav_file.writeframes(np_data.tobytes())
+
 
 serial.close()
 print('Serial port closed.')
