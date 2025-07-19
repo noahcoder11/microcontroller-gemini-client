@@ -62,7 +62,7 @@ np_data = np_data.astype(np.int16)
 with wave.open('output.wav', 'wb') as wav_file:
     wav_file.setnchannels(1)
     wav_file.setsampwidth(2)  # 16-bit samples
-    wav_file.setframerate(6500)
+    wav_file.setframerate(16000)
     wav_file.writeframes(np_data.tobytes())
 
 
