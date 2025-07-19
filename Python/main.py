@@ -26,7 +26,6 @@ SELECTED_PORT = select_serial_port()
 serial = Serial(port=SELECTED_PORT.device, baudrate=BAUD_RATE, timeout=None)
 serial.flush()
 serial.reset_input_buffer()
-time.sleep(5)
 
 volumeFactor = 4
 multiplier = pow(2, (sqrt(sqrt(sqrt(volumeFactor))) * 192 - 192)/6)
@@ -57,7 +56,7 @@ print('Data read successfully. Processing data...')
 with wave.open('output.wav', 'wb') as wav_file:
     wav_file.setnchannels(1)
     wav_file.setsampwidth(2)  # 16-bit samples
-    wav_file.setframerate(6000)
+    wav_file.setframerate(6500)
     wav_file.writeframes(np_data.tobytes())
 
 
