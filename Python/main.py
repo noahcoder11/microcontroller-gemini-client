@@ -22,7 +22,7 @@ BAUD_RATE = 115200
 
 SELECTED_PORT = select_serial_port()
 
-serial = Serial(port=SELECTED_PORT.device, baudrate=BAUD_RATE, timeout=10)
+serial = Serial(port=SELECTED_PORT.device, baudrate=BAUD_RATE, timeout=None)
 serial.flush()
 serial.reset_input_buffer()
 time.sleep(5)
