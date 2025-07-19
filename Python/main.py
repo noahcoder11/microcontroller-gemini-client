@@ -2,6 +2,7 @@ from serial import Serial
 from serial.tools import list_ports
 import numpy as np
 import time
+import resampy
 from math import sqrt
 from typing import Union
 import wave
@@ -49,6 +50,11 @@ np.multiply(np_data, multiplier, out=np_data, casting='unsafe')
 np_data = np_data - (2048 - 150)
 print(len(np_data), 'samples read.')
 print('Data read successfully. Processing data...')
+
+# Data seems to be around 6500 Hz, so let's upsample to 16000
+new_data = resampy.resample(np_data, 6500, 16000)
+np_data = new_data * 32767
+np_data = np_data.astype(np.int16)
 
 # new_data = np.array([ np.arange(len(np_data)), np_data ]).T
 
