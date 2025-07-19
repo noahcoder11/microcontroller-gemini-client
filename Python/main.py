@@ -2,23 +2,36 @@ from serial import Serial
 from serial.tools import list_ports
 import numpy as np
 import time
+from typing import Union
 import wave
+
+def select_serial_port(default: Union[int, None] = None):
+    ports = list_ports.comports()
+    if default:
+        print('Using default serial port {}'.format(default))
+        return ports[default]
+
+    print('Please select a serial port:')
+    
+    print('\n'.join(f'{i}: {port.device} - {port.description}' for i, port in enumerate(ports)))
+
+    return ports[int(input('Enter the number of the port you want to use: '))]
 
 BYTES_TO_READ = 96000
 BAUD_RATE = 115200
 
-print('Please select a serial port:')
-ports = list_ports.comports()
-print('\n'.join(f'{i}: {port.device} - {port.description}' for i, port in enumerate(ports)))
+SELECTED_PORT = select_serial_port()
 
-selected_port = int(input('Enter the number of the port you want to use: '))
-
-serial = Serial(port=ports[selected_port].device, baudrate=BAUD_RATE, timeout=10)
+serial = Serial(port=SELECTED_PORT.device, baudrate=BAUD_RATE, timeout=10)
 serial.flush()
 serial.reset_input_buffer()
 time.sleep(5)
-print('Reading serial data...')
 
+go_ahead = input('Press [ENTER] to read data')
+
+serial.write('r'.encode('utf-8'))
+
+# Now the device will send audio data
 data = serial.read(BYTES_TO_READ)
 print(f'Read {len(data)} bytes from serial port.')
 
