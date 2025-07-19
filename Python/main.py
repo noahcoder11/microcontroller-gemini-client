@@ -2,6 +2,7 @@ from serial import Serial
 from serial.tools import list_ports
 import numpy as np
 import time
+from math import sqrt
 from typing import Union
 import wave
 
@@ -27,6 +28,9 @@ serial.flush()
 serial.reset_input_buffer()
 time.sleep(5)
 
+volumeFactor = 4
+multiplier = pow(2, (sqrt(sqrt(sqrt(volumeFactor))) * 192 - 192)/6)
+
 go_ahead = input('Press [ENTER] to read data')
 
 serial.write('r'.encode('utf-8'))
@@ -41,6 +45,7 @@ if len(data) % 2 != 0:
 
 d_type = np.dtype(np.uint16).newbyteorder('<')
 np_data = np.frombuffer(data, dtype=d_type).astype(np.int16)
+np.multiply(np_data, multiplier, out=np_data, casting='unsafe')
 
 np_data = np_data - (2048 - 150)
 print(len(np_data), 'samples read.')
